@@ -1,6 +1,5 @@
 import java.util.Scanner; //dùng để khai báo thư viện Scanner để nhập dữ liệu 
-import java.time.Year;
-
+import java.time.Year; //dùng để khai báo thư viện Year để lấy năm hiện tại
 class Sach {
     private String maSach;
     private String tenSach;
@@ -8,8 +7,7 @@ class Sach {
     private int namXuatBan;
     private double donGia;
     private int soLuong;
-    private int loaiSach;
-    //private Scanner scanner = new Scanner(System.in);
+    private String loaiSach;
     // Constructor có tham số đầy đủ
     public Sach(String maSach, String tenSach, String tacGia, int namXuatBan, double donGia, int soLuong) {
         this.maSach = maSach;
@@ -62,7 +60,7 @@ class Sach {
     public void setSoLuong(int soLuong) {
         this.soLuong = soLuong;
     }
-    //nhập thông tin sách (BT1)
+    //nhập thông tin sách (BT1_tuan3)
     public void nhapThongTin(Scanner sc) {
         System.out.print("Nhap ma sach: ");
         this.maSach = sc.nextLine();
@@ -76,72 +74,88 @@ class Sach {
         this.donGia = sc.nextDouble();
         System.out.print("Nhap so luong: ");
         this.soLuong = sc.nextInt();
-        System.out.println("Chon loai sach:");
-        System.out.println("1. Sach giao khoa");
-        System.out.println("2. Sach tham khao");
-        System.out.println("3. Sach chuyen nganh");
-        System.out.println("4. Sach khac");
-        System.out.print("Lua chon cua ban: ");
-        this.loaiSach = sc.nextInt();
         sc.nextLine(); // xóa bộ nhớ đệm
-    }
-    //kiểm tra thông tin sách (Bài 1)
-    public boolean kiemTraNamXuatBanHopLe() {
-        return this.namXuatBan >= 1 && this.namXuatBan <= Year.now().getValue();
-    }
-    public boolean kiemTraThongTinHopLe() {
-        return this.donGia > 0 && this.soLuong >= 0 && kiemTraNamXuatBanHopLe();
-    }
-    //phân loại giá sách (Bài 2)
-    public String phanLoaiGia() {
-        if (this.donGia < 50000) {
-            return "Sach gia thap";
-        } else if (this.donGia <= 100000) {
-            return "Sach gia trung binh";
-        } else if (this.donGia <= 200000) {
-            return "Sach gia cao";
-        } else {
-            return "Sach gia dac biet";
-        }
-    }
-    //phân loại tồn kho (Bài 3)
-    public String phanLoaiTonKho() {
-        if (this.soLuong == 0) {
-            return "Het sach";
-        } else if (this.soLuong <= 5) {
-            return "Sap het";
-        } else if (this.soLuong <= 20) {
-            return "Con it";
-        } else {
-            return "Con nhieu";
-        }
-    }
-    //chọn loại sách bằng switch (Bài 4)
-    public String tenLoaiSach() {
-        switch (this.loaiSach) {
+        //Dùng switch chọn loại sách. Ví dụ 1. Sách giáo khoa 2. Sách tham khảo 3. Sách chuyên ngành 4. Sách khác (BT4_tuan4)
+        System.out.println("Chon loai sach: 1. Sach giao khoa  2. Sach tham khao  3. Sach chuyen nganh  4. Sach khac");
+        System.out.print("Lua chon: ");
+        int luaChon = sc.nextInt();
+        sc.nextLine();
+        switch (luaChon) {
             case 1:
-                return "Sach giao khoa";
+                this.loaiSach = "Sach giao khoa";
+                break;
             case 2:
-                return "Sach tham khao";
+                this.loaiSach = "Sach tham khao";
+                break;
             case 3:
-                return "Sach chuyen nganh";
+                this.loaiSach = "Sach chuyen nganh";
+                break;
             case 4:
-                return "Sach khac";
+                this.loaiSach = "Sach khac";
+                break;
             default:
-                return "Loai sach khong hop le";
+                this.loaiSach = "Loai sach khong hop le";
         }
     }
-    //tính thành tiền (BT2)
+    //tính thành tiền (BT2_tuan3)
     public double tinhThanhTien() {
         return this.donGia * this.soLuong;
     }
-    //tính phí vận chuyển (BT3)
+    //tính phí vận chuyển (BT3_tuan3)
     public double tinhPhiVanChuyen() {
         return tinhThanhTien() * 0.05;
     }
-    //tính tổng tiền nhập (BT4)
+    //tính tổng tiền nhập (BT4_tuan3)
     public double tinhTongTienNhap() {
         return tinhThanhTien() + tinhPhiVanChuyen();
+    }
+    //Phân loại giá: thấp, trung bình, cao, đặc biệt. 
+    // Giá < 50.000 → Sách giá thấp, 50.000–100.000 → Sách giá trung bình, 
+    // 100.000–200.000 → Sách giá cao,  >200.000 → Sách giá đặc biệt
+    public String phanLoaiGia() {
+        if (donGia < 50000) {
+            return "Sach gia thap";
+        } 
+        else 
+            if (donGia >= 50000 && donGia < 100000) {
+                return "Sach gia trung binh";
+            } 
+            else 
+                if (donGia >= 100000 && donGia <= 200000) {
+                    return "Sach gia cao";
+                } 
+                else {
+                    return "Sach gia dac biet";
+                }
+    }
+    //Phân loại tồn kho: hết, sắp hết, còn ít, còn nhiều. 
+    // Số lượng = 0 → Hết sách, 1–5 → Sắp hết, 6–20 → Còn ít, >20 → Còn nhiều
+    public String phanLoaiTonKho() {
+        if (soLuong == 0) {
+            return "Het sach";
+        } 
+        else 
+            if (soLuong >= 1 && soLuong <= 5) {
+                return "Sap het";
+            } 
+            else 
+                if (soLuong >= 6 && soLuong <= 20) {
+                    return "Con it";
+                } 
+                else {
+                    return "Con nhieu";
+                }
+    }
+    //Kiểm tra giá > 0, số lượng >= 0, năm xuất bản hợp lệ
+    public boolean thongTinHopLe() {
+        int namHienTai = Year.now().getValue();
+        boolean giaHopLe = donGia > 0;
+        boolean soLuongHopLe = soLuong >= 0;
+        boolean namHopLe = namXuatBan >= 1 && namXuatBan <= namHienTai;
+        System.out.println("Gia sach hop le: " + (giaHopLe ? "Co" : "Khong"));
+        System.out.println("So luong hop le: " + (soLuongHopLe ? "Co" : "Khong"));
+        System.out.println("Nam xuat ban hop le (1-" + namHienTai + "): " + (namHopLe ? "Co" : "Khong"));
+        return giaHopLe && soLuongHopLe && namHopLe;
     }
     //hiển thị thông tin sách 
     public void hienThiThongTin() {
@@ -151,19 +165,16 @@ class Sach {
         System.out.println("Nam xuat ban: " + this.namXuatBan);
         System.out.println("Don gia: " + this.donGia);
         System.out.println("So luong: " + this.soLuong);
-        System.out.println("Loai sach: " + tenLoaiSach());
-        System.out.println("Kiem tra don gia (> 0): " + (this.donGia > 0 ? "Hop le" : "Khong hop le"));
-        System.out.println("Kiem tra so luong (>= 0): " + (this.soLuong >= 0 ? "Hop le" : "Khong hop le"));
-        System.out.println("Kiem tra nam xuat ban: " + (kiemTraNamXuatBanHopLe() ? "Hop le" : "Khong hop le"));
-        System.out.println("Thong tin sach: " + (kiemTraThongTinHopLe() ? "Hop le" : "Khong hop le"));
+        System.out.println("Sach hop le: " + (thongTinHopLe() ? "Co" : "Khong"));
         System.out.println("Phan loai gia: " + phanLoaiGia());
-        System.out.println("Tinh trang ton kho: " + phanLoaiTonKho());
+        System.out.println("Phan loai ton kho: " + phanLoaiTonKho());
+        System.out.println("Loai sach: " + this.loaiSach);
         System.out.println("Thanh tien: " + tinhThanhTien());
         System.out.println("Phi van chuyen: " + tinhPhiVanChuyen());
         System.out.println("Tong tien nhap: " + tinhTongTienNhap());
     }
 }
-public class Main{
+public class BTT3 {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         Sach sach = new Sach("", "", "", 0, 0.0, 0);
