@@ -1,5 +1,4 @@
 package BTT8;
-
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.time.Year;

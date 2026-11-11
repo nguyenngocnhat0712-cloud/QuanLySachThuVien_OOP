@@ -1,7 +1,5 @@
 package BTT8;
-
 import java.time.Year;
-
 public class Sach {
     // Yeu cau 1(BTT8): Tat ca thuoc tinh duoc khai bao private.
     private String maSach;
@@ -9,7 +7,6 @@ public class Sach {
     private String tacGia;
     private int namXuatBan;
     private int soLuong;
-
     // Yeu cau 4(BTT8): Constructor day du, khoi tao tat ca thuoc tinh.
     // Su dung setter de dam bao du lieu hop le ngay khi tao doi tuong.
     public Sach(String maSach, String tieuDe, String tacGia, int namXuatBan, int soLuong) {
