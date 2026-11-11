@@ -3,6 +3,11 @@ import java.util.ArrayList;
 import java.util.Scanner;
 public class Test {
     public static void main(String[] args) {
+        chayChuongTrinh();
+    }
+
+    // Chay menu quan ly sach den khi nguoi dung chon thoat.
+    public static void chayChuongTrinh() {
         Scanner scanner = new Scanner(System.in);
 
         // Yeu cau 4(BTT7): Tao ArrayList de luu va quan ly danh sach Sach.
@@ -15,8 +20,7 @@ public class Test {
             System.out.println("1. Them sach");
             System.out.println("2. Hien thi danh sach sach");
             System.out.println("0. Thoat");
-            System.out.print("Lua chon cua ban: ");
-            luaChon = Integer.parseInt(scanner.nextLine());
+            luaChon = nhapSoNguyen(scanner, "Lua chon cua ban: ");
 
             switch (luaChon) {
                 case 1:
@@ -26,10 +30,8 @@ public class Test {
                     String tieuDe = scanner.nextLine();
                     System.out.print("Nhap tac gia: ");
                     String tacGia = scanner.nextLine();
-                    System.out.print("Nhap nam xuat ban: ");
-                    int namXuatBan = Integer.parseInt(scanner.nextLine());
-                    System.out.print("Nhap so luong: ");
-                    int soLuong = Integer.parseInt(scanner.nextLine());
+                    int namXuatBan = nhapSoNguyen(scanner, "Nhap nam xuat ban: ");
+                    int soLuong = nhapSoNguyen(scanner, "Nhap so luong: ");
 
                     // Yeu cau 3(BTT7): Tao doi tuong Sach tu thong tin vua nhap.
                     // Yeu cau 4(BTT7): Them doi tuong Sach vao ArrayList.
@@ -56,5 +58,17 @@ public class Test {
         } while (luaChon != 0);
 
         scanner.close();
+    }
+
+    private static int nhapSoNguyen(Scanner scanner, String thongBao) {
+        while (true) {
+            System.out.print(thongBao);
+            String duLieu = scanner.nextLine();
+            try {
+                return Integer.parseInt(duLieu);
+            } catch (NumberFormatException e) {
+                System.out.println("Vui long nhap mot so nguyen.");
+            }
+        }
     }
 }
